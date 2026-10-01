@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Premier League Tournament — Season 2</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  :root{
+    --bg:#f7f7f5;
+    --panel:#ffffff;
+    --line: #e1e1dc;
+    --navy:#1f2d3d;
+    --navy-soft:#4a5a6a;
+    --accent:#8a7150;
+    --def-color:#3f6b8a;
+    --mid-color:#8a6a3f;
+    --fwd-color:#8a3f3f;
+    --card-bg: #fbfbfa;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  body{
+    background: var(--bg);
+    color: var(--navy);
+    font-family: 'Arial Narrow', Arial, sans-serif;
+    min-height:100vh;
+    padding: 0 20px 80px;
+  }
+
+  .wrap{
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  /* HERO */
+  .hero{
+    text-align:center;
+    padding: 40px 20px 44px;
+    position:relative;
+  }
+
+  .hero::before, .hero::after{
+    content:"";
+    position:absolute;
+    top:0; bottom:0;
+    width:1px;
+    background: var(--line);
+  }
+
+  .eyebrow{
+    font-family: Arial, sans-serif;
+    letter-spacing: 0.45em;
+    font-size: 13px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .center-circle{
+    width: 84px; height:84px;
+    border: 2px solid var(--accent);
+    border-radius:50%;
+    margin: 0 auto 22px;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 0 0 6px rgba(138,113,80,0.08);
+  }
+  .center-circle::after{
+    content:"";
+    width: 8px; height:8px;
+    background: var(--accent);
+    border-radius:50%;
+  }
+
+  h1{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight:400;
+    font-size: clamp(40px, 8vw, 76px);
+    letter-spacing: 0.02em;
+    line-height: 0.95;
+    text-transform: uppercase;
+    color: var(--navy);
+    text-shadow: none;
+  }
+  h1 span{
+    color: var(--accent);
+  }
+
+  .season-tag{
+    margin-top: 18px;
+    display:inline-flex;
+    align-items:center;
+    gap: 14px;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--navy);
+    opacity:0.85;
+  }
+  .season-tag .num{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 34px;
+    color: var(--accent);
+    letter-spacing: 0;
+  }
+  .dot{
+    width:5px; height:5px; background: var(--accent); border-radius:50%;
+    opacity:0.6;
+  }
+
+  .meta{
+    margin-top: 22px;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    color: var(--navy);
+    opacity: 0.6;
+    font-family: Arial, sans-serif;
+    text-transform: uppercase;
+  }
+
+  /* SQUAD SECTIONS */
+  .squad{
+    margin-top: 30px;
+  }
+
+  .position-block{
+    margin-bottom: 46px;
+  }
+
+  .position-header{
+    display:flex;
+    align-items:baseline;
+    gap: 16px;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .position-tag{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    padding: 5px 14px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    color: var(--panel);
+  }
+  .position-tag.def{ background: var(--def-color); }
+  .position-tag.mid{ background: var(--mid-color); }
+  .position-tag.fwd{ background: var(--fwd-color); }
+  .position-tag.all{ background: var(--accent); }
+  .position-block.all .player-card{ border-left-color: var(--accent); }
+
+  .position-title{
+    font-family: Arial, sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--navy);
+  }
+
+  .position-count{
+    margin-left:auto;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 22px;
+    color: var(--accent);
+  }
+  .position-count::after{
+    content:" PLAYERS";
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--navy);
+    opacity: 0.5;
+  }
+
+  .roster-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+  }
+
+  .player-card{
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid transparent;
+    border-radius: 4px;
+    padding: 12px 16px;
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    transition: background 0.15s ease;
+  }
+  .position-block.def .player-card{ border-left-color: var(--def-color); }
+  .position-block.mid .player-card{ border-left-color: var(--mid-color); }
+  .position-block.fwd .player-card{ border-left-color: var(--fwd-color); }
+
+  .player-num{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 20px;
+    color: var(--navy);
+    opacity: 0.3;
+    min-width: 28px;
+  }
+
+  .player-name{
+    font-family: Arial, sans-serif;
+    font-size: 17px;
+    letter-spacing: 0.02em;
+    color: var(--navy);
+    text-transform: uppercase;
+  }
+
+  footer{
+    text-align:center;
+    margin-top: 50px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--navy);
+    opacity: 0.4;
+  }
+
+  @media (max-width: 560px){
+    .position-header{ flex-wrap: wrap; }
+    .position-count{ margin-left:0; }
+    .roster-grid{ grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand"><span class="crest"></span>HUFC <span>Premier League</span></a>
+      <div class="nav-links">
+        <a href="index.html">Dashboard</a>
+        <a href="teams.html">Teams</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="points-table.html">Points Table</a>
+        <a href="stats.html">Stats</a>
+        <a href="rules.html">Rules</a>
+        <a href="squad.html" class="active">Full Squad</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+
+    <div class="hero">
+      <div class="eyebrow">Official Squad List</div>
+      <div class="center-circle"></div>
+      <h1>HUFC Premier<br><span>League</span></h1>
+      <div class="season-tag">
+        <span>Season</span>
+        <span class="num">02</span>
+        <span class="dot"></span>
+        <span>50 Registered Players</span>
+      </div>
+      <div class="meta">2026 Edition</div>
+    </div>
+
+    <div class="squad">
+
+      <div class="position-block all">
+        <div class="position-header">
+          <span class="position-tag all">TDR</span>
+          <span class="position-title">Team Death Row</span>
+          <span class="position-count">10</span>
+        </div>
+        <div class="roster-grid">
+          <div class="player-card"><span class="player-num">01</span><span class="player-name">Zain</span></div>
+          <div class="player-card"><span class="player-num">02</span><span class="player-name">Bilal</span></div>
+          <div class="player-card"><span class="player-num">03</span><span class="player-name">Sajid</span></div>
+          <div class="player-card"><span class="player-num">04</span><span class="player-name">Hammad</span></div>
+          <div class="player-card"><span class="player-num">05</span><span class="player-name">Sohaib</span></div>
+          <div class="player-card"><span class="player-num">06</span><span class="player-name">Mubeen</span></div>
+          <div class="player-card"><span class="player-num">07</span><span class="player-name">Taha</span></div>
+          <div class="player-card"><span class="player-num">08</span><span class="player-name">Malik Ali</span></div>
+          <div class="player-card"><span class="player-num">09</span><span class="player-name">Daniyal</span></div>
+          <div class="player-card"><span class="player-num">10</span><span class="player-name">Mehbub</span></div>
+        </div>
+      </div>
+
+      <div class="position-block all">
+        <div class="position-header">
+          <span class="position-tag all">AJK</span>
+          <span class="position-title">AJK FC</span>
+          <span class="position-count">11</span>
+        </div>
+        <div class="roster-grid">
+          <div class="player-card"><span class="player-num">01</span><span class="player-name">Usama</span></div>
+          <div class="player-card"><span class="player-num">02</span><span class="player-name">Hassan</span></div>
+          <div class="player-card"><span class="player-num">03</span><span class="player-name">Danish</span></div>
+          <div class="player-card"><span class="player-num">04</span><span class="player-name">Khurram</span></div>
+          <div class="player-card"><span class="player-num">05</span><span class="player-name">Talha</span></div>
+          <div class="player-card"><span class="player-num">06</span><span class="player-name">Umer</span></div>
+          <div class="player-card"><span class="player-num">07</span><span class="player-name">Saim</span></div>
+          <div class="player-card"><span class="player-num">08</span><span class="player-name">Usama YT</span></div>
+          <div class="player-card"><span class="player-num">09</span><span class="player-name">Ali Murtaza</span></div>
+          <div class="player-card"><span class="player-num">10</span><span class="player-name">Touseef</span></div>
+          <div class="player-card"><span class="player-num">11</span><span class="player-name">Balaght</span></div>
+        </div>
+      </div>
+
+      <div class="position-block all">
+        <div class="position-header">
+          <span class="position-tag all">JL</span>
+          <span class="position-title">Jugnu Legend FC</span>
+          <span class="position-count">10</span>
+        </div>
+        <div class="roster-grid">
+          <div class="player-card"><span class="player-num">01</span><span class="player-name">Zaheer</span></div>
+          <div class="player-card"><span class="player-num">02</span><span class="player-name">Haseeb</span></div>
+          <div class="player-card"><span class="player-num">03</span><span class="player-name">Huzaifa</span></div>
+          <div class="player-card"><span class="player-num">04</span><span class="player-name">Mutayab</span></div>
+          <div class="player-card"><span class="player-num">05</span><span class="player-name">Ali Bhatti</span></div>
+          <div class="player-card"><span class="player-num">06</span><span class="player-name">Molvi Ahsan</span></div>
+          <div class="player-card"><span class="player-num">07</span><span class="player-name">Hafiz Zeeshan</span></div>
+          <div class="player-card"><span class="player-num">08</span><span class="player-name">Ali Ahmed</span></div>
+          <div class="player-card"><span class="player-num">09</span><span class="player-name">Luqa</span></div>
+          <div class="player-card"><span class="player-num">10</span><span class="player-name">Haris</span></div>
+        </div>
+      </div>
+
+      <div class="position-block all">
+        <div class="position-header">
+          <span class="position-tag all">MFC</span>
+          <span class="position-title">Muslim FC</span>
+          <span class="position-count">10</span>
+        </div>
+        <div class="roster-grid">
+          <div class="player-card"><span class="player-num">01</span><span class="player-name">Javed Iqbal</span></div>
+          <div class="player-card"><span class="player-num">02</span><span class="player-name">Shahbaz Ahmed</span></div>
+          <div class="player-card"><span class="player-num">03</span><span class="player-name">Usama Jr</span></div>
+          <div class="player-card"><span class="player-num">04</span><span class="player-name">Hussaini</span></div>
+          <div class="player-card"><span class="player-num">05</span><span class="player-name">Anas Bhatti</span></div>
+          <div class="player-card"><span class="player-num">06</span><span class="player-name">Ahsan</span></div>
+          <div class="player-card"><span class="player-num">07</span><span class="player-name">Wahab Khan</span></div>
+          <div class="player-card"><span class="player-num">08</span><span class="player-name">Hanif Khan</span></div>
+          <div class="player-card"><span class="player-num">09</span><span class="player-name">Arslan</span></div>
+          <div class="player-card"><span class="player-num">10</span><span class="player-name">Ahsan Jugnu</span></div>
+        </div>
+      </div>
+
+      <div class="position-block all">
+        <div class="position-header">
+          <span class="position-tag all">AFC</span>
+          <span class="position-title">Athletic FC</span>
+          <span class="position-count">9</span>
+        </div>
+        <div class="roster-grid">
+          <div class="player-card"><span class="player-num">01</span><span class="player-name">Vicky</span></div>
+          <div class="player-card"><span class="player-num">02</span><span class="player-name">Ali Athar</span></div>
+          <div class="player-card"><span class="player-num">03</span><span class="player-name">Zeeshan</span></div>
+          <div class="player-card"><span class="player-num">04</span><span class="player-name">Imran</span></div>
+          <div class="player-card"><span class="player-num">05</span><span class="player-name">Ali</span></div>
+          <div class="player-card"><span class="player-num">06</span><span class="player-name">Shani</span></div>
+          <div class="player-card"><span class="player-num">07</span><span class="player-name">Akram</span></div>
+          <div class="player-card"><span class="player-num">08</span><span class="player-name">Daud</span></div>
+          <div class="player-card"><span class="player-num">09</span><span class="player-name">Haider</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <footer>HUFC Premier League · Season 2 · Official Squad Registry</footer>
+
+  </div>
+</body>
+</html>
